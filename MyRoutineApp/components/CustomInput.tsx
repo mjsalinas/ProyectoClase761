@@ -1,4 +1,5 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
 import { View, TextInput,StyleSheet, KeyboardTypeOptions, TouchableOpacity } from "react-native";
 
 type Props = {
@@ -9,10 +10,22 @@ type Props = {
 };
 
 export default function CustomInput({onChangeText, type= "default", value, placeholder}: Props) {
+    //variables de estado
+    const [isSecureText, setIsSecureText] = useState(type === "password");
+        /*
+            1. Primera accion: inicializar la variable con el valor booleano de la evaluacion logica 
+            2. Segunda accion: utilizar la variable en el componente. Ej: asignada a la propiedad secureTextEntry de TextInput
+            3. Tercera accion: actualizar su valor; Ej. setIsSecureText(true)
+        */
+
+    //constantes
     const keyboardType: KeyboardTypeOptions = 
         type === "email" ? "email-address" :
             type === "number" ? "numeric" :
                 "default";
+
+    const isPasswordField = type === "password";
+    //funciones
 
     return (
     <View 
@@ -25,11 +38,18 @@ export default function CustomInput({onChangeText, type= "default", value, place
         value={value}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
-        secureTextEntry
+        secureTextEntry={isSecureText}
         />
-        <TouchableOpacity>
-            <Ionicons name={"eye"} size={22} color={'black'} />
-        </TouchableOpacity>
+
+       { isPasswordField &&
+        <TouchableOpacity 
+            onPress={()=>{
+                setIsSecureText(!isSecureText)
+            }}>
+            <Ionicons name={isSecureText ? "eye-off" :  "eye" } size={22} color={'black'} />
+        </TouchableOpacity>}
+
+
     </View>
   );
 }
