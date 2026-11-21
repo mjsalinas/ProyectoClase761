@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
+import { palette } from "../theme/palette";
 
 type Props = {
   onChangeText: (text: string) => void;
@@ -60,10 +61,11 @@ export default function CustomInput({
   return (
     <View style={styles.wrapper}>
       <View style={styles.inputContainer}>
-        <MaterialIcons name={icon as any} size={22} color={"black"} />
+        <MaterialIcons name={icon as any} size={22} color={palette.teal} />
         <TextInput
           style={styles.input}
           placeholder={placeholder}
+          placeholderTextColor={palette.steelBlue}
           value={value}
           onChangeText={onChangeText}
           keyboardType={keyboardType}
@@ -79,12 +81,12 @@ export default function CustomInput({
             <Ionicons
               name={isSecureText ? "eye-off" : "eye"}
               size={22}
-              color={"black"}
+              color={palette.teal}
             />
           </TouchableOpacity>
         )}
       </View>
-      <Text>{error}</Text>
+      <Text style={styles.errorText}>{error}</Text>
     </View>
   );
 }
@@ -102,12 +104,28 @@ const styles = StyleSheet.create({
     paddingLeft: 14,
     paddingRight: 14,
     width: 200,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 8,
+    borderColor: palette.steelBlue,
+    borderWidth: 1.5,
+    borderRadius: 12,
+    backgroundColor: palette.darkTeal,
+    shadowColor: palette.richBlack,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.18,
+    shadowRadius: 6,
+    elevation: 2,
   },
   input: {
     fontSize: 15,
-    paddingVertical: 5,
+    paddingVertical: 8,
+    flex: 1,
+    marginHorizontal: 8,
+    color: palette.skyBlue,
+    letterSpacing: 0.3,
+  },
+  errorText: {
+    color: palette.skyBlue,
+    fontSize: 12,
+    marginTop: 6,
+    letterSpacing: 0.2,
   },
 });
